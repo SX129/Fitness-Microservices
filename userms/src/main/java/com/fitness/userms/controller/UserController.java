@@ -58,7 +58,7 @@ public class UserController {
             UserDTO userDTO = userService.createUser(request);
             return new ResponseEntity<>(new UserResponse(userDTO, "User created."), HttpStatus.CREATED);
         } catch (Exception e){
-            return new ResponseEntity<>(new UserResponse(null, e.getMessage()), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new UserResponse(null, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
     }
