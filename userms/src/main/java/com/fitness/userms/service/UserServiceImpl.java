@@ -1,5 +1,6 @@
 package com.fitness.userms.service;
 
+import com.fitness.userms.dto.RegisterRequest;
 import com.fitness.userms.dto.UserDTO;
 import com.fitness.userms.mapper.UserMapper;
 import com.fitness.userms.model.User;
@@ -45,7 +46,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO createUser(User user) {
+    public UserDTO createUser(RegisterRequest request) {
+        if(userRepository.existsByEmail(request.getEmail())){
+            throw new RuntimeException("Email already exists.");
+        }
+
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+
         userRepository.save(user);
         return UserMapper.mapToUserDTO(user);
     }

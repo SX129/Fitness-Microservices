@@ -1,5 +1,6 @@
 package com.fitness.userms.service;
 
+import com.fitness.userms.dto.RegisterRequest;
 import com.fitness.userms.dto.UserDTO;
 import com.fitness.userms.model.User;
 
@@ -12,7 +13,7 @@ public interface UserService {
 
     public List<UserDTO> getAllUsersByRole(String role);
 
-    public UserDTO createUser(User user);
+    public UserDTO createUser(RegisterRequest request);
 
     public UserDTO updateUserById(Long userId, User user);
 

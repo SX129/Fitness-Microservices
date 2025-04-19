@@ -1,9 +1,11 @@
 package com.fitness.userms.controller;
 
+import com.fitness.userms.dto.RegisterRequest;
 import com.fitness.userms.dto.UserDTO;
 import com.fitness.userms.model.User;
 import com.fitness.userms.responses.UserResponse;
 import com.fitness.userms.service.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +53,14 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<UserResponse> createUser(@RequestBody User user){
-        UserDTO userDTO = userService.createUser(user);
-        return new ResponseEntity<>(new UserResponse(userDTO, "User created."), HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody RegisterRequest request){
+        try {
+            UserDTO userDTO = userService.createUser(request);
+            return new ResponseEntity<>(new UserResponse(userDTO, "User created."), HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(new UserResponse(null, e.getMessage()), HttpStatus.CONFLICT);
+        }
+
     }
 
     @PatchMapping("/{userId}")
