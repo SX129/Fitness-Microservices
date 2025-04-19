@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO getUserById(Long userId) {
-        User user = userRepository.getReferenceById(userId);
+        User user = userRepository.findById(userId).orElse(null);
         return UserMapper.mapToUserDTO(user);
     }
 
@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDTO> getAllUsersByRole(String role) {
-        if(role == "USER"){
+        if(role.equals("USER")){
             List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.USER).toList();
             return users.stream().map(user -> UserMapper.mapToUserDTO(user)).collect(Collectors.toList());
-        }else if(role == "ADMIN"){
+        }else if(role.equals("ADMIN")){
             List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.ADMIN).toList();
             return users.stream().map(user -> UserMapper.mapToUserDTO(user)).collect(Collectors.toList());
         }
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO updateUserById(Long userId, User user) {
-        User updatedUser = userRepository.getReferenceById(userId);
+        User updatedUser = userRepository.findById(userId).orElse(null);
 
         if(updatedUser != null){
             if(user.getEmail() != null){
@@ -75,12 +75,12 @@ public class UserServiceImpl implements UserService{
             userRepository.save(updatedUser);
         }
 
-        return UserMapper.mapToUserDTO(user);
+        return UserMapper.mapToUserDTO(updatedUser);
     }
 
     @Override
     public boolean deleteUserById(Long userId) {
-        User user =  userRepository.getReferenceById(userId);
+        User user =  userRepository.findById(userId).orElse(null);
 
         if(user == null){
             return false;

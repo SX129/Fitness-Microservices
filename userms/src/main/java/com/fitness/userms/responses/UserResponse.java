@@ -1,7 +1,5 @@
 package com.fitness.userms.responses;
 
-import com.fitness.userms.dto.UserDTO;
-
 public class UserResponse<T> {
     private T data;
     private String message;
