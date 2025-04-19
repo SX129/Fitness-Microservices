@@ -14,33 +14,31 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
     }
 
     @Override
     public UserDTO getUserById(Long userId) {
         User user = userRepository.getReferenceById(userId);
-        return userMapper.mapToUserDTO(user);
+        return UserMapper.mapToUserDTO(user);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> userMapper.mapToUserDTO(user)).toList();
+        return users.stream().map(user -> UserMapper.mapToUserDTO(user)).toList();
     }
 
     @Override
     public List<UserDTO> getAllUsersByRole(String role) {
         if(role == "USER"){
             List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.USER).toList();
-            return users.stream().map(user -> userMapper.mapToUserDTO(user)).collect(Collectors.toList());
+            return users.stream().map(user -> UserMapper.mapToUserDTO(user)).collect(Collectors.toList());
         }else if(role == "ADMIN"){
             List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.ADMIN).toList();
-            return users.stream().map(user -> userMapper.mapToUserDTO(user)).collect(Collectors.toList());
+            return users.stream().map(user -> UserMapper.mapToUserDTO(user)).collect(Collectors.toList());
         }
 
         return null;
@@ -49,7 +47,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO createUser(User user) {
         userRepository.save(user);
-        return userMapper.mapToUserDTO(user);
+        return UserMapper.mapToUserDTO(user);
     }
 
     @Override
@@ -77,7 +75,7 @@ public class UserServiceImpl implements UserService{
             userRepository.save(updatedUser);
         }
 
-        return userMapper.mapToUserDTO(user);
+        return UserMapper.mapToUserDTO(user);
     }
 
     @Override
