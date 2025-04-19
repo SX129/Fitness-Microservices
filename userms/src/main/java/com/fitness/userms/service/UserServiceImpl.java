@@ -1,5 +1,7 @@
 package com.fitness.userms.service;
 
+import com.fitness.userms.dto.UserDTO;
+import com.fitness.userms.mapper.UserMapper;
 import com.fitness.userms.model.User;
 import com.fitness.userms.model.UserRole;
 import com.fitness.userms.repository.UserRepository;
@@ -12,40 +14,47 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public User getUserById(Long userId) {
-        return userRepository.getReferenceById(userId);
+    public UserDTO getUserById(Long userId) {
+        User user = userRepository.getReferenceById(userId);
+        return userMapper.mapToUserDTO(user);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> userMapper.mapToUserDTO(user)).toList();
     }
 
     @Override
-    public List<User> getAllUsersByRole(String role) {
+    public List<UserDTO> getAllUsersByRole(String role) {
         if(role == "USER"){
-            return userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.USER).collect(Collectors.toList());
+            List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.USER).toList();
+            return users.stream().map(user -> userMapper.mapToUserDTO(user)).collect(Collectors.toList());
         }else if(role == "ADMIN"){
-            return userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.ADMIN).collect(Collectors.toList());
+            List<User> users = userRepository.findAll().stream().filter(user -> user.getRole() == UserRole.ADMIN).toList();
+            return users.stream().map(user -> userMapper.mapToUserDTO(user)).collect(Collectors.toList());
         }
 
         return null;
     }
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDTO createUser(User user) {
+        userRepository.save(user);
+        return userMapper.mapToUserDTO(user);
     }
 
     @Override
-    public User updateUserById(Long userId, User user) {
-        User updatedUser = getUserById(userId);
+    public UserDTO updateUserById(Long userId, User user) {
+        User updatedUser = userRepository.getReferenceById(userId);
 
         if(updatedUser != null){
             if(user.getEmail() != null){
@@ -68,12 +77,12 @@ public class UserServiceImpl implements UserService{
             userRepository.save(updatedUser);
         }
 
-        return updatedUser;
+        return userMapper.mapToUserDTO(user);
     }
 
     @Override
     public boolean deleteUserById(Long userId) {
-        User user = getUserById(userId);
+        User user =  userRepository.getReferenceById(userId);
 
         if(user == null){
             return false;

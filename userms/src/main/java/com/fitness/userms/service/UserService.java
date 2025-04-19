@@ -1,19 +1,20 @@
 package com.fitness.userms.service;
 
+import com.fitness.userms.dto.UserDTO;
 import com.fitness.userms.model.User;
 
 import java.util.List;
 
 public interface UserService {
-    public User getUserById(Long userId);
+    public UserDTO getUserById(Long userId);
 
-    public List<User> getAllUsers();
+    public List<UserDTO> getAllUsers();
 
-    public List<User> getAllUsersByRole(String role);
+    public List<UserDTO> getAllUsersByRole(String role);
 
-    public User createUser(User user);
+    public UserDTO createUser(User user);
 
-    public User updateUserById(Long userId, User user);
+    public UserDTO updateUserById(Long userId, User user);
 
     public boolean deleteUserById(Long userId);
 }
