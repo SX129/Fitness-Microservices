@@ -2,6 +2,7 @@ package com.fitness.activityms.service;
 
 import com.fitness.activityms.dto.ActivityDTO;
 import com.fitness.activityms.dto.RegisterRequest;
+import com.fitness.activityms.model.Activity;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ActivityService {
 
     public ActivityDTO createActivity(Long userId, RegisterRequest registerRequest);
 
-    public ActivityDTO updateActivityById(Long userId, Long activityId, RegisterRequest registerRequest);
+    public ActivityDTO updateActivityById(Long userId, Long activityId, Activity activity);
 
     public boolean deleteActivityById(Long userId, Long activityId);
 }

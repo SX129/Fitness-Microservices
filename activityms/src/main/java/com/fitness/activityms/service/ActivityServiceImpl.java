@@ -2,9 +2,13 @@ package com.fitness.activityms.service;
 
 import com.fitness.activityms.dto.ActivityDTO;
 import com.fitness.activityms.dto.RegisterRequest;
+import com.fitness.activityms.mapper.ActivityMapper;
+import com.fitness.activityms.model.Activity;
+import com.fitness.activityms.model.ActivityType;
 import com.fitness.activityms.repository.ActivityRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,31 +22,100 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public ActivityDTO getActivityById(Long userId, Long activityId) {
-        return null;
+        Activity activity = activityRepository.findById(activityId).orElse(null);
+
+        if(activity == null){
+            throw new RuntimeException("Activity id does not exist.");
+        }else if(activity.getUserId() != userId){
+            throw new RuntimeException("User does not contain activity id.");
+        }
+
+        return ActivityMapper.mapToActivityDTO(activity);
     }
 
     @Override
     public List<ActivityDTO> getAllUserActivities(Long userId) {
-        return null;
+        List<Activity> activities = activityRepository.findByUserId(userId);
+        return activities.stream().map(activity -> ActivityMapper.mapToActivityDTO(activity)).toList();
     }
 
     @Override
     public List<ActivityDTO> getAllUserActivitiesByType(Long userId, String type) {
-        return null;
+        ActivityType activityType;
+
+        try {
+            activityType = ActivityType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid type: " + type);
+        }
+
+        List<Activity> activities = activityRepository.findByUserId(userId).stream().filter(activity -> activity.getType().equals(activityType)).toList();
+        return activities.stream().map(activity -> ActivityMapper.mapToActivityDTO(activity)).toList();
     }
 
     @Override
     public ActivityDTO createActivity(Long userId, RegisterRequest registerRequest) {
-        return null;
+        Activity activity = new Activity();
+
+        activity.setUserId(userId);
+        activity.setDuration(registerRequest.getDuration());
+        activity.setType(registerRequest.getType());
+        activity.setAdditionalMetrics(registerRequest.getAdditionalMetrics());
+        activity.setCaloriesBurned(registerRequest.getCaloriesBurned());
+        activity.setStartTime(registerRequest.getStartTime());
+
+        activityRepository.save(activity);
+
+        return ActivityMapper.mapToActivityDTO(activity);
     }
 
     @Override
-    public ActivityDTO updateActivityById(Long userId, Long activityId, RegisterRequest registerRequest) {
-        return null;
+    public ActivityDTO updateActivityById(Long userId, Long activityId, Activity activity) {
+        Activity updatedActivity = activityRepository.findById(activityId).orElse(null);
+
+        if(activity == null){
+            throw new RuntimeException("Activity id does not exist.");
+        }else if(activity.getUserId() != userId){
+            throw new RuntimeException("User does not contain activity id.");
+        }
+
+        if(activity.getAdditionalMetrics() != null){
+            updatedActivity.setAdditionalMetrics(activity.getAdditionalMetrics());
+        }
+
+        if(activity.getDuration() != null){
+            updatedActivity.setDuration(activity.getDuration());
+        }
+
+        if(activity.getType() != null){
+            updatedActivity.setType(activity.getType());
+        }
+
+        if(activity.getCaloriesBurned() != null){
+            updatedActivity.setCaloriesBurned(activity.getCaloriesBurned());
+        }
+
+        if(activity.getStartTime() != null){
+            updatedActivity.setStartTime(activity.getStartTime());
+        }
+
+        updatedActivity.setUpdatedAt(LocalDateTime.now());
+        activityRepository.save(updatedActivity);
+
+        return ActivityMapper.mapToActivityDTO(updatedActivity);
     }
 
     @Override
     public boolean deleteActivityById(Long userId, Long activityId) {
-        return false;
+        Activity activity = activityRepository.findById(activityId).orElse(null);
+
+        if(activity == null){
+            throw new RuntimeException("Activity id does not exist.");
+        }else if(activity.getUserId() != userId){
+            throw new RuntimeException("User does not contain activity id.");
+        }
+
+        activityRepository.delete(activity);
+        return true;
     }
 }
