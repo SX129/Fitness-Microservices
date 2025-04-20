@@ -1,7 +1,7 @@
 package com.fitness.activityms.controller;
 
 import com.fitness.activityms.dto.ActivityDTO;
-import com.fitness.activityms.dto.RegisterRequest;
+import com.fitness.activityms.dto.ActivityRequest;
 import com.fitness.activityms.model.Activity;
 import com.fitness.activityms.responses.ActivityResponse;
 import com.fitness.activityms.service.ActivityServiceImpl;
@@ -54,8 +54,8 @@ public class ActivityController {
     }
 
     @PostMapping()
-    public ResponseEntity<ActivityResponse> createActivity(@PathVariable Long userId, @RequestBody RegisterRequest registerRequest){
-        ActivityDTO activityDTO = activityService.createActivity(userId, registerRequest);
+    public ResponseEntity<ActivityResponse> createActivity(@PathVariable Long userId, @RequestBody ActivityRequest activityRequest){
+        ActivityDTO activityDTO = activityService.createActivity(userId, activityRequest);
         return new ResponseEntity<>(new ActivityResponse(activityDTO, "User activity created."), HttpStatus.CREATED);
     }
 

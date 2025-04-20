@@ -1,7 +1,7 @@
 package com.fitness.activityms.service;
 
 import com.fitness.activityms.dto.ActivityDTO;
-import com.fitness.activityms.dto.RegisterRequest;
+import com.fitness.activityms.dto.ActivityRequest;
 import com.fitness.activityms.mapper.ActivityMapper;
 import com.fitness.activityms.model.Activity;
 import com.fitness.activityms.model.ActivityType;
@@ -54,15 +54,15 @@ public class ActivityServiceImpl implements ActivityService{
     }
 
     @Override
-    public ActivityDTO createActivity(Long userId, RegisterRequest registerRequest) {
+    public ActivityDTO createActivity(Long userId, ActivityRequest activityRequest) {
         Activity activity = new Activity();
 
         activity.setUserId(userId);
-        activity.setDuration(registerRequest.getDuration());
-        activity.setType(registerRequest.getType());
-        activity.setAdditionalMetrics(registerRequest.getAdditionalMetrics());
-        activity.setCaloriesBurned(registerRequest.getCaloriesBurned());
-        activity.setStartTime(registerRequest.getStartTime());
+        activity.setDuration(activityRequest.getDuration());
+        activity.setType(activityRequest.getType());
+        activity.setAdditionalMetrics(activityRequest.getAdditionalMetrics());
+        activity.setCaloriesBurned(activityRequest.getCaloriesBurned());
+        activity.setStartTime(activityRequest.getStartTime());
 
         activityRepository.save(activity);
 

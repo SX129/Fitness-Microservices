@@ -4,14 +4,14 @@ import com.fitness.activityms.model.ActivityType;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class RegisterRequest {
+public class ActivityRequest {
     private ActivityType type;
     private Integer duration;
     private Integer caloriesBurned;
     private LocalDateTime startTime;
     private Map<String, Object> additionalMetrics;
 
-    public RegisterRequest(ActivityType type, Integer duration, Integer caloriesBurned, LocalDateTime startTime, Map<String, Object> additionalMetrics) {
+    public ActivityRequest(ActivityType type, Integer duration, Integer caloriesBurned, LocalDateTime startTime, Map<String, Object> additionalMetrics) {
         this.type = type;
         this.duration = duration;
         this.caloriesBurned = caloriesBurned;
