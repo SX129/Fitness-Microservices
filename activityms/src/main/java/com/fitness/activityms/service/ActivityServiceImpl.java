@@ -21,7 +21,7 @@ public class ActivityServiceImpl implements ActivityService{
 
 
     @Override
-    public ActivityDTO getActivityById(Long userId, Long activityId) {
+    public ActivityDTO getActivityById(Long userId, String activityId) {
         Activity activity = activityRepository.findById(activityId).orElse(null);
 
         if(activity == null){
@@ -70,7 +70,7 @@ public class ActivityServiceImpl implements ActivityService{
     }
 
     @Override
-    public ActivityDTO updateActivityById(Long userId, Long activityId, Activity activity) {
+    public ActivityDTO updateActivityById(Long userId, String activityId, Activity activity) {
         Activity updatedActivity = activityRepository.findById(activityId).orElse(null);
 
         if(activity == null){
@@ -106,7 +106,7 @@ public class ActivityServiceImpl implements ActivityService{
     }
 
     @Override
-    public boolean deleteActivityById(Long userId, Long activityId) {
+    public boolean deleteActivityById(Long userId, String activityId) {
         Activity activity = activityRepository.findById(activityId).orElse(null);
 
         if(activity == null){

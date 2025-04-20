@@ -1,7 +1,5 @@
 package com.fitness.activityms.responses;
 
-import com.fitness.activityms.dto.ActivityDTO;
-
 public class ActivityResponse<T> {
     private T data;
     private String message;

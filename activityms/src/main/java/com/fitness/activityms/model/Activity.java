@@ -3,7 +3,6 @@ package com.fitness.activityms.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,7 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class Activity {
     @Id
-    private Long id;
+    private String id;
 
     private Long userId;
     private ActivityType type;
@@ -40,7 +39,7 @@ public class Activity {
 
     }
 
-    public Activity(Long id, Long userId, ActivityType type, Integer duration, Integer caloriesBurned, LocalDateTime startTime, Map<String, Object> additionalMetrics) {
+    public Activity(String id, Long userId, ActivityType type, Integer duration, Integer caloriesBurned, LocalDateTime startTime, Map<String, Object> additionalMetrics) {
         this.id = id;
         this.userId = userId;
         this.type = type;
@@ -50,11 +49,11 @@ public class Activity {
         this.additionalMetrics = additionalMetrics;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

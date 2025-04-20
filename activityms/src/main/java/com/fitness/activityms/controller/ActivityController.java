@@ -22,7 +22,7 @@ public class ActivityController {
 
 
     @GetMapping("/{activityId}")
-    public ResponseEntity<ActivityResponse> getActivityById(@PathVariable Long userId, @PathVariable Long activityId){
+    public ResponseEntity<ActivityResponse> getActivityById(@PathVariable Long userId, @PathVariable String activityId){
         try{
             ActivityDTO activityDTO = activityService.getActivityById(userId, activityId);
             return new ResponseEntity<>(new ActivityResponse(activityDTO, "User activity found."), HttpStatus.OK);
@@ -60,7 +60,7 @@ public class ActivityController {
     }
 
     @PatchMapping("/{activityId}")
-    public ResponseEntity<ActivityResponse> updateActivityById(@PathVariable Long userId, @PathVariable Long activityId, @RequestBody Activity activity){
+    public ResponseEntity<ActivityResponse> updateActivityById(@PathVariable Long userId, @PathVariable String activityId, @RequestBody Activity activity){
         try{
             ActivityDTO activityDTO = activityService.updateActivityById(userId, activityId, activity);
             return new ResponseEntity<>(new ActivityResponse(activityDTO, "User activity updated."), HttpStatus.OK);
@@ -70,7 +70,7 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{activityId}")
-    public ResponseEntity<ActivityResponse> deleteActivityById(@PathVariable Long userId, @PathVariable Long activityId){
+    public ResponseEntity<ActivityResponse> deleteActivityById(@PathVariable Long userId, @PathVariable String activityId){
         try{
             boolean activityDeleted = activityService.deleteActivityById(userId, activityId);
             return new ResponseEntity<>(new ActivityResponse(null, "User activity deleted."), HttpStatus.OK);
