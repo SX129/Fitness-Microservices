@@ -46,7 +46,7 @@ public class ActivityServiceImpl implements ActivityService{
         try {
             activityType = ActivityType.valueOf(type.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid type: " + type);
+            throw new RuntimeException("Invalid activity type: " + type);
         }
 
         List<Activity> activities = activityRepository.findByUserId(userId).stream().filter(activity -> activity.getType().equals(activityType)).toList();

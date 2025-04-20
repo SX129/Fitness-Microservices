@@ -2,21 +2,21 @@ package com.fitness.activityms.responses;
 
 import com.fitness.activityms.dto.ActivityDTO;
 
-public class ActivityResponse {
-    private ActivityDTO activityDTO;
+public class ActivityResponse<T> {
+    private T data;
     private String message;
 
-    public ActivityResponse(ActivityDTO activityDTO, String message) {
-        this.activityDTO = activityDTO;
+    public ActivityResponse(T data, String message) {
+        this.data = data;
         this.message = message;
     }
 
-    public ActivityDTO getActivityDTO() {
-        return activityDTO;
+    public T getData() {
+        return data;
     }
 
-    public void setActivityDTO(ActivityDTO activityDTO) {
-        this.activityDTO = activityDTO;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public String getMessage() {
