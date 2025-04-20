@@ -5,6 +5,10 @@ public class UserDTO {
     private String firstName;
     private String lastName;
 
+    public UserDTO(){
+
+    }
+
     public UserDTO(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
