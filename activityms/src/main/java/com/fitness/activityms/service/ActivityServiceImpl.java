@@ -75,7 +75,7 @@ public class ActivityServiceImpl implements ActivityService{
 
         if(updatedActivity == null){
             throw new RuntimeException("Activity id does not exist.");
-        }else if(!activity.getUserId().equals(userId)){
+        }else if(!updatedActivity.getUserId().equals(userId)){
             throw new RuntimeException("User does not contain activity id.");
         }
 
