@@ -73,7 +73,7 @@ public class ActivityServiceImpl implements ActivityService{
     public ActivityDTO updateActivityById(Long userId, String activityId, Activity activity) {
         Activity updatedActivity = activityRepository.findById(activityId).orElse(null);
 
-        if(activity == null){
+        if(updatedActivity == null){
             throw new RuntimeException("Activity id does not exist.");
         }else if(activity.getUserId() != userId){
             throw new RuntimeException("User does not contain activity id.");
