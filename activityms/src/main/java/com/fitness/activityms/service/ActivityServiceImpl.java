@@ -57,13 +57,11 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public ActivityDTO createActivity(Long userId, ActivityRequest activityRequest) {
-        boolean isValidUser = userValidationService.validateUser(userId);
+//        boolean isValidUser = userValidationService.validateUser(userId);
 
-        System.out.println(isValidUser);
-
-        if(!isValidUser){
-            throw new RuntimeException("Invalid user test.");
-        }
+//        if(!isValidUser){
+//            throw new RuntimeException("Invalid user test.");
+//        }
 
         Activity activity = new Activity();
 
