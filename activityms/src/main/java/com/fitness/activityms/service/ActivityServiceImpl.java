@@ -14,9 +14,11 @@ import java.util.List;
 @Service
 public class ActivityServiceImpl implements ActivityService{
     private final ActivityRepository activityRepository;
+    private final UserValidationService userValidationService;
 
-    public ActivityServiceImpl(ActivityRepository activityRepository) {
+    public ActivityServiceImpl(ActivityRepository activityRepository, UserValidationService userValidationService) {
         this.activityRepository = activityRepository;
+        this.userValidationService = userValidationService;
     }
 
 
@@ -55,6 +57,14 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public ActivityDTO createActivity(Long userId, ActivityRequest activityRequest) {
+        boolean isValidUser = userValidationService.validateUser(userId);
+
+        System.out.println(isValidUser);
+
+        if(!isValidUser){
+            throw new RuntimeException("Invalid user test.");
+        }
+
         Activity activity = new Activity();
 
         activity.setUserId(userId);
