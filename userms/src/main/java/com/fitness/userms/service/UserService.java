@@ -18,4 +18,6 @@ public interface UserService {
     public UserDTO updateUserById(Long userId, User user);
 
     public boolean deleteUserById(Long userId);
+
+    Boolean existsByUserId(Long userId);
 }

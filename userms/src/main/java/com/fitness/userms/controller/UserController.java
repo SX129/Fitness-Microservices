@@ -83,4 +83,9 @@ public class UserController {
 
         return new ResponseEntity<>(new UserResponse(null, "User deleted."), HttpStatus.OK);
     }
+
+    @GetMapping("/{userId}/validate")
+    public ResponseEntity<Boolean> validateUser(@PathVariable Long userId){
+        return new ResponseEntity<>(userService.existsByUserId(userId), HttpStatus.OK);
+    }
 }
